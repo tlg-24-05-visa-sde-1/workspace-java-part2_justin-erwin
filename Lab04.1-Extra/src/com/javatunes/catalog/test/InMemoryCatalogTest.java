@@ -34,8 +34,14 @@ class InMemoryCatalogTest {
         // testSelfTitled();
         //testGenreCount();
         //testAvgPrice();
+        //testAvgPriceGenre();
     }
 
+    private static void testAvgPriceGenre(){
+        InMemoryCatalog catalog = new InMemoryCatalog();
+      System.out.println(catalog.avePriceGenre(MusicCategory.POP));
+
+    }
 
     private static void testAvgPrice(){
         InMemoryCatalog catalog = new InMemoryCatalog();

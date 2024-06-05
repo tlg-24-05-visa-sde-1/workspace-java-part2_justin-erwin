@@ -199,6 +199,10 @@ public class InMemoryCatalog implements Catalog {
     //TODO-find how to compare all items price
     public Collection<MusicItem> cheapestInGenre(MusicCategory category){
         Collection<MusicItem> cheapest = new ArrayList<>();
+        for(MusicItem item : cheapest){
+            //how do I compare each item to all others and return only the cheapest
+            //nested for loop?
+        }
         return cheapest;
     }
 
@@ -207,43 +211,55 @@ public class InMemoryCatalog implements Catalog {
      * TASK: find the average price of items in the specified genre (MusicCategory).
      */
 
-
-    /**
-     * TASK: are all items priced at least $10?
-     * This is a yes/no answer.
-     */
-
-
-    /**
-     * TASK: do we sell any items with the specified genre (MusicCategory)?
-     * Another yes/no answer.
-     */
-
-
-    /**
-     * TASK: find the titles of all "pop" items, sorted by natural order.
-     * Just the titles!
-     */
-
-
-    /**
-     * TASK: find all items released in the 80s whose price is less than or equal to the specified price.
-     */
-
-
-    /**
-     * TASK: return a map whose keys are all the genres (categories), and each key's associated value
-     * is a collection of items in that genre.  If there is a genre that we don't currently
-     * sell, that key's associated value should be an empty collection, not null.
-     */
-
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder(getClass().getSimpleName() + ": \n");
-        for (MusicItem item: catalogData) {
-            builder.append(item).append("\n");
-        }
-        return builder.toString();
+    public double avePriceGenre(MusicCategory category) {
+        double totalPrice = 0;
+        Collection<MusicItem> genreList = new ArrayList<>();
+        for (MusicItem item : catalogData) {
+            if (item.getMusicCategory().equals(category)) {
+                genreList.add(item);
+            }}
+            for (MusicItem genreItem : genreList)
+                totalPrice += genreItem.getPrice();
+        return totalPrice / genreList.size();
     }
-}
+
+
+        /**
+         * TASK: are all items priced at least $10?
+         * This is a yes/no answer.
+         */
+
+
+        /**
+         * TASK: do we sell any items with the specified genre (MusicCategory)?
+         * Another yes/no answer.
+         */
+
+
+        /**
+         * TASK: find the titles of all "pop" items, sorted by natural order.
+         * Just the titles!
+         */
+
+
+        /**
+         * TASK: find all items released in the 80s whose price is less than or equal to the specified price.
+         */
+
+
+        /**
+         * TASK: return a map whose keys are all the genres (categories), and each key's associated value
+         * is a collection of items in that genre.  If there is a genre that we don't currently
+         * sell, that key's associated value should be an empty collection, not null.
+         */
+
+
+        @Override
+        public String toString () {
+            StringBuilder builder = new StringBuilder(getClass().getSimpleName() + ": \n");
+            for (MusicItem item : catalogData) {
+                builder.append(item).append("\n");
+            }
+            return builder.toString();
+        }
+    }
