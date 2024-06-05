@@ -56,27 +56,44 @@ public class Television {
                 + getVolume() + ", currentChannel: " + getCurrentChannel();
     }
 
-    @Override
+/*    @Override   //"equal" or duplicate objects need to have the same hash code - duplicates mean .equals() is true.
     public int hashCode(){  //we HAVE to use the same fields we used in .equals() to define BUSINESS EQUALITY
         //this is a poor hash function, b/c it easily yields "hash collisions"
         //a "hash collision" is when "different" object happen to have the same hashcode (dumb luck), they ruin
         //Set optimization b/c then it has to go to .equals() if the hashCodes are the same.
         //return getBrand().length() + getVolume();
         return Objects.hash(getBrand(), getVolume());  //this is provided good hashCode() that we get from java.util.Objects
-    }
+        //and is much less likely to cause hash collisions
+    }*/
 
-    @Override
+    //INTELLIJ can generate these
+/*    @Override      // BASICALLY - in equals() we can check type, downcast, check the fields in a null safe fashion
     public boolean equals(Object obj){  //this signature needs to be exactly like this b/c it overrides the free .equals() method.
         boolean result = false; //assume they aren't equal
-        if( obj instanceof Television){  //check to see if the type is the same (if it's a Television in this case).  If not, method returns false.
+        if(this.getClass() == obj.getClass()){ //better to check class to see if they are the EXACT same type - instanceof will include subclasses.
+//        if( obj instanceof Television){  //check to see if the type is the same (if it's a Television in this case).  If not, method returns false.
+            // If so, we proceed.
             //downcast obj reference type to Television type (what we're passing into .equals() to compare) so we can call getName() and getAge()
             //remember- this .equals() will run inside of the object we call it on.
 
             Television other = (Television) obj;
             //do the checks - check fields you want to compare - referred to as "BUSINESS EQUALITY".  Sets result to be true if checks are true.
-            result = Objects.equals(this.getBrand(), other.getBrand()) &&  // null-safe check
+            result = Objects.equals(this.getBrand(), other.getBrand()) &&  // Objects utility class gives us a null-safe check (for comparing objects)
                     this.getVolume() == other.getVolume();  //no null-safe check necessary b/c primitives can't be null
         }
         return result;
+    }*/
+//IntelliJ generated hashCode() and equals();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Television that = (Television) o;
+        return getVolume() == that.getVolume() && Objects.equals(getBrand(), that.getBrand());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getBrand(), getVolume());
     }
 }

@@ -20,12 +20,12 @@ class TelevisionClient {
         System.out.println("tvA .equals() tvB: " + tvA.equals(tvB));  //false, why?  You have to WRITE the equals method
         // in Television or you inherit the default one from class Object.  The default inherited version executes inside
         // the tvA object and compares references.  Inside tvA, and checks if tvA is equal to tvB, the same thing as ==.
-        // UPDATE: We wrote our own .equals() methos and now it returns TRUE.
+        // UPDATE: We wrote our own .equals() method and now it returns TRUE.
         System.out.println();
 
         Set<Television> tvs = new HashSet<>();
         tvs.add(tvA);
-        tvs.add(tvB);
+        tvs.add(tvB);  //tvB won't go into set b/c it's equal to tvA
         System.out.println("The size of the Set is: " + tvs.size());
         System.out.println(tvs);
     }
