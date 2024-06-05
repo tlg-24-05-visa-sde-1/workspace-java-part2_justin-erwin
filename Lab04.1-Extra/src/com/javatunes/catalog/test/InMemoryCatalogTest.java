@@ -25,16 +25,22 @@ class InMemoryCatalogTest {
      */
     public static void main(String[] args) {
         // testFindById();
-        //testFindByKeyword();
+        // testFindByKeyword();
         // testFindByCategory();
         // testSize();
         // testGetAll();
 
-        //testCheapRock();
+        // testCheapRock();
         // testSelfTitled();
-        //testGenreCount();
-        //testAvgPrice();
-        //testAvgPriceGenre();
+        // testGenreCount();
+        // testAvgPrice();
+        // testAvgPriceGenre();
+        testIsAllOverTen();
+    }
+
+    private static void testIsAllOverTen() {
+        InMemoryCatalog catalog = new InMemoryCatalog();
+        System.out.println(catalog.isAllOverTen());
     }
 
     private static void testAvgPriceGenre(){

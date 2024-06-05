@@ -200,8 +200,9 @@ public class InMemoryCatalog implements Catalog {
     public Collection<MusicItem> cheapestInGenre(MusicCategory category){
         Collection<MusicItem> cheapest = new ArrayList<>();
         for(MusicItem item : cheapest){
-            //how do I compare each item to all others and return only the cheapest
-            //nested for loop?
+
+            //order by natural order and take first item in arrayList?
+            //make compareTo()?
         }
         return cheapest;
     }
@@ -228,6 +229,15 @@ public class InMemoryCatalog implements Catalog {
          * TASK: are all items priced at least $10?
          * This is a yes/no answer.
          */
+        public boolean isAllOverTen(){
+           boolean isAllOverTen = true;
+           for(MusicItem item : catalogData){
+               if (item.getPrice()< 10.0){
+                   isAllOverTen = false;
+               }
+           }
+        return isAllOverTen;
+        }
 
 
         /**
