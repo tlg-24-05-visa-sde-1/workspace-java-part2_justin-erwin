@@ -2,7 +2,7 @@ package com.entertainment;
 
 import java.util.Objects;
 
-public class Television {
+public class Television implements Comparable<Television> {
     //fields
     private String brand;
     private int volume;
@@ -47,6 +47,11 @@ public class Television {
 
     public void setVolume(int volume) {
         this.volume = volume;
+    }
+
+    @Override
+    public int compareTo(Television other) {
+        return this.getBrand().compareTo(other.getBrand());
     }
 
     //toString()
@@ -96,4 +101,5 @@ public class Television {
     public int hashCode() {
         return Objects.hash(getBrand(), getVolume());
     }
+
 }
