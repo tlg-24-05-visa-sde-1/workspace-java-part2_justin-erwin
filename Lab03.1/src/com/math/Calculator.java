@@ -15,7 +15,7 @@ public class Calculator {
     }
 
     public double divide(int a, int b) {
-        return 1.0 * a / b;  // convert to double, otherwise int / int -> int, e.g., 7/3 = 2
+        return 1.0 * a / b;  // **convert to double by multiplying by 1.0, otherwise int / int -> int, e.g., 7/3 = 2
     }
 
     public boolean isEven(int x) {
