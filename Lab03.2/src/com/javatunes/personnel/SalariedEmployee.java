@@ -27,8 +27,10 @@ public class SalariedEmployee extends Employee {
     }
 
     @Override
-    public void pay() {
-        System.out.println(getName() + " is paid salary " + getSalary());
+    public double pay() {
+        double payment = getSalary();
+        System.out.println(getName() + " is paid salary " + payment);
+        return payment;
     }
 
     @Override  // interface TaxPayer
@@ -58,8 +60,8 @@ public class SalariedEmployee extends Employee {
         boolean result = false;
         if (obj instanceof SalariedEmployee) {
             SalariedEmployee other = (SalariedEmployee) obj;
-            result = super.equals(obj) &&
-                     Objects.equals(this.getSalary(), other.getSalary());
+            result = super.equals(obj) &&  //this checks what's checked in superClass (Employee), name and hireDate
+                     Objects.equals(this.getSalary(), other.getSalary());  //this checks what's unique to SalariedEmployees
         }
         return result;
     }
