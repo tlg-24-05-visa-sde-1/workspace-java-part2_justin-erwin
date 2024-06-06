@@ -3,6 +3,7 @@ package com.entertainment.client;
 import com.entertainment.Television;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -12,12 +13,12 @@ class TelevisionClient {
         //create two Televisions that are "the same"
         Television tvA = new Television("Sony", 50);
         Television tvB = new Television("Sony", 50);  //we didn't write hashCode so,
-        // the Set doesn't see them as duplicates and lets them both in. We have to write hashCode() if we write .equals().
+/*        // the Set doesn't see them as duplicates and lets them both in. We have to write hashCode() if we write .equals().
         System.out.println(tvA.hashCode());
-        System.out.println(tvB.hashCode());
+        System.out.println(tvB.hashCode());*/
 
-        Television tvC = new Television("Samsung", 32);
-        Television tvD  = new Television("LG", 12);
+        Television tvC = new Television("Sony", 52);
+        Television tvD  = new Television("Sony", 12);
 
         //using == and .equals() to see if tvA and tvB are equal.
         System.out.println("tvA == tvB: " + (tvA == tvB));  //false of course b/c they point to 2 diff. objects
@@ -27,7 +28,7 @@ class TelevisionClient {
         // UPDATE: We wrote our own .equals() method and now it returns TRUE.
         System.out.println();
 
-        Set<Television> tvs = new TreeSet<>();
+        Set<Television> tvs = new TreeSet<>();   //make a set with the tvs
         tvs.add(tvA);
         tvs.add(tvB);  //tvB won't go into set b/c it's equal to tvA
         tvs.add(tvC);

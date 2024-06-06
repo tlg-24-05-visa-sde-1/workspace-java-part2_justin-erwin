@@ -3,6 +3,11 @@ package com.entertainment;
 import java.util.Objects;
 
 public class Television implements Comparable<Television> {
+    /*
+     *NOTE: to be "consistent with equals", you MUST use you same sort keys(s)
+     * in compareTo() as you're using in your equals().  For us, that's (brand and volume);
+     *Natural order is thus defined by brand (String) and then by volume (int)
+     */
     //fields
     private String brand;
     private int volume;
@@ -51,7 +56,11 @@ public class Television implements Comparable<Television> {
 
     @Override
     public int compareTo(Television other) {
-        return this.getBrand().compareTo(other.getBrand());
+        int result = this.getBrand().compareTo(other.getBrand());
+        if (result == 0){
+            result = Integer.compare(this.getVolume(), other.getVolume());
+        }
+        return result;
     }
 
     //toString()
