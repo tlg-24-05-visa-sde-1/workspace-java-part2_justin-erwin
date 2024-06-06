@@ -17,7 +17,7 @@ public class CalculatorTest {
     private Calculator calc;
 
     //runs once before all tests (and @Before) - rarely used
-    @BeforeClass
+    @BeforeClass    //static and shared amongst all the tests
     public static void beforeClass() throws Exception {
         System.out.println("beforeClass");
     }
@@ -36,6 +36,7 @@ public class CalculatorTest {
         //repeat ourselves in each test.  setUp() is called before each test unit so each test gets a brand-new Calculator.
     }
     //tear-down method to clean up - mostly used to close connections or files we've opened.  Will run after each test method.
+    //More rare than @Before - maybe to close a DB connection if we opened one in @Before
     @After
     public void cleanUp() throws Exception {
         System.out.println("cleanUp");
@@ -51,7 +52,7 @@ public class CalculatorTest {
     @Test
     public void testDivide() {
         System.out.println("testDivide");
-        assertEquals(2.5, calc.divide(5, 2), .001);  //delta is the tolerance, and we need to use it with doubles.
+        assertEquals(2.5, calc.divide(5, 2), .001);  //***delta is the tolerance, and we need to use it with doubles.
     }
 
     @Test
