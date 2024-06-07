@@ -286,6 +286,19 @@ public class InMemoryCatalog implements Catalog {
          * is a collection of items in that genre.  If there is a genre that we don't currently
          * sell, that key's associated value should be an empty collection, not null.
          */
+        //TODO- test
+        public Map<String, Collection<MusicItem>> readOnlyMap(String... genres){
+            Map<String, Collection<MusicItem>> result = new HashMap<>();
+            for(String genre : genres){
+                Collection<MusicItem> genreItems = new ArrayList<>();
+                for (MusicItem item : catalogData){
+                    if(item.getMusicCategory().equals(genre));
+                    genreItems.add(item);
+                }
+                result.put("genre", (genreItems));
+            }
+            return result;
+        }
 
         @Override
         public String toString () {

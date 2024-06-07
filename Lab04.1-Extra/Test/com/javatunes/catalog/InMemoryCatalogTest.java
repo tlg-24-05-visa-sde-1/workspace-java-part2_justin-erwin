@@ -59,7 +59,7 @@ public class InMemoryCatalogTest {
     }
 
     @Test
-    public void findByCategory_shouldReturnPopulatedCollection_categoryNotFound() {
+    public void findByCategory_shouldReturnEmptyCollection_categoryNotFound() {
         Collection<MusicItem> jazzItems = catalog.findByCategory(MusicCategory.JAZZ);
         assertNotNull(jazzItems);
         assertEquals(0, jazzItems.size());
