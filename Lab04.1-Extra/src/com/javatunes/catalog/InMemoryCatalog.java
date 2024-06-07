@@ -7,18 +7,14 @@
  */
 
 package com.javatunes.catalog;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 // OF COURSE THIS CLASS DOESN'T COMPILE
 // Your first job is to fulfill the contract that this class has signed.
 public class InMemoryCatalog implements Catalog {
 
     private List<MusicItem> catalogData = new ArrayList<>(List.of(
-                   /* id    title                        artist                       releaseDate  price  musicCategory */
+                       /* id        title                               artist                                releaseDate        price  musicCategory */
         new MusicItem(1L,  "Diva",                      "Annie Lennox",              "1992-01-04", 13.99, MusicCategory.POP),
         new MusicItem(2L,  "Dream of the Blue Turtles", "Sting",                     "1985-02-05", 14.99, MusicCategory.POP),
         new MusicItem(3L,  "Trouble is...",             "Kenny Wayne Shepherd Band", "1997-08-08", 14.99, MusicCategory.BLUES),
@@ -197,16 +193,16 @@ public class InMemoryCatalog implements Catalog {
      * TASK: find the cheapest item with the specified genre (MusicCategory).
      */
     //TODO-find how to compare all items price
-    public Collection<MusicItem> cheapestInGenre(MusicCategory category){
+    public MusicItem cheapestInGenre(MusicCategory category){
         Collection<MusicItem> cheapest = new ArrayList<>();
-        for(MusicItem item : cheapest){
-
-            //order by natural order and take first item in arrayList?
-            //make compareTo()?
+        for(MusicItem item : catalogData){
+            if(item.getMusicCategory().equals(category))
+            cheapest.add(item);
         }
-        return cheapest;
+        List<MusicItem> cheapestList = new ArrayList<>(cheapest);
+        cheapestList.sort(new MusicItemPriceComparator());
+        return cheapestList.get(0);    //this returns the cheapeast, but what if there are multiple with the same price?
     }
-
 
     /**
      * TASK: find the average price of items in the specified genre (MusicCategory).
@@ -223,7 +219,6 @@ public class InMemoryCatalog implements Catalog {
                 totalPrice += genreItem.getPrice();
         return totalPrice / genreList.size();
     }
-
 
         /**
          * TASK: are all items priced at least $10?
@@ -244,25 +239,53 @@ public class InMemoryCatalog implements Catalog {
          * TASK: do we sell any items with the specified genre (MusicCategory)?
          * Another yes/no answer.
          */
-
+        public boolean doWeSellGenre(MusicCategory category) {
+            boolean result = false;
+            for (MusicItem item : catalogData) {
+                if (item.getMusicCategory().equals(category)) {
+                    result = true;
+                }
+            }
+                return result;
+        }
 
         /**
          * TASK: find the titles of all "pop" items, sorted by natural order.
          * Just the titles!
          */
-
+        public Collection<String> getPopItemTitles(){
+            List<String> popItemTitlesSorted = new ArrayList<>();
+            for (MusicItem item : catalogData)
+            {
+                if(item.getMusicCategory().equals(MusicCategory.POP)){
+                    popItemTitlesSorted.add(item.getTitle());
+                }
+            }
+                Collections.sort(popItemTitlesSorted);  //we can sort using .sort in Collections util class b/c Strings have natural order
+            //and we don't  need to write compareTo() or a comparator;
+            return popItemTitlesSorted;
+        }
 
         /**
          * TASK: find all items released in the 80s whose price is less than or equal to the specified price.
          */
 
+        public Collection<MusicItem> getMusicItemsPre1980(double price){
+            Collection<MusicItem> result = new ArrayList<>();
+            Date beforeDate = new Date(1980,01,01);
+            for(MusicItem item : catalogData){
+                if(item.getReleaseDate().before(beforeDate) && item.getPrice()<price){
+                    result.add(item);
+                }
+            }
+            return result;
+        }
 
         /**
          * TASK: return a map whose keys are all the genres (categories), and each key's associated value
          * is a collection of items in that genre.  If there is a genre that we don't currently
          * sell, that key's associated value should be an empty collection, not null.
          */
-
 
         @Override
         public String toString () {
@@ -272,4 +295,4 @@ public class InMemoryCatalog implements Catalog {
             }
             return builder.toString();
         }
-    }
+}
