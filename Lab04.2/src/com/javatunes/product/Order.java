@@ -18,12 +18,15 @@ public class Order {
     }
 
     /**
-     * TODO:
      * get the items from the cart and iterate over them, print each item's product code
      * get cart total and print
      */
-    public void processCart(Object reference_to_cart) {
-
+    public void processCart(ShoppingCart<? extends Product> cart) { //ShoppingCart of anything as long as it's a product
+        System.out.println("Order " + getId() + " contains the following:");
+        for(Product product : cart.allItems()){
+            System.out.println(product.getCode());
+        }
+        System.out.println(cart.total());
     }
 
     public String getId() {

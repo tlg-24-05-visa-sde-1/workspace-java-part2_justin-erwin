@@ -13,16 +13,25 @@ import org.junit.Test;
 
 public class ShoppingCartTest {
 
+    @Test
+    public void testTotal() {
+        ShoppingCart<Product> cart = new ShoppingCart<>();
+        cart.addItem(new MediaPlayer("MPC-22"));
+        cart.addItem(new MediaPlayer("MP3-222"));
+        cart.addItem(new MusicItem("Cd-501"));
+        assertEquals(110.0, cart.total(), .001);
+    }
+
     /**
      * Product-based shopping cart, allows all types of Products.
      */
     @Test
     public void testProductCart() {
-        ShoppingCart<Product> cart = new ShoppingCart<>();
+        ShoppingCart<Product> cart = new ShoppingCart<>();  //T is Product - will accept anything that IS-A product
         cart.addItem(new MusicItem("CD-501"));
         cart.addItem(new MediaPlayer("MP3-LP150"));
         // sanity check, this qualifies as "too simple to fail"
-        // assertEquals(2, cart.size());
+        assertEquals(2, cart.size());
     }
 
     /**
@@ -34,11 +43,11 @@ public class ShoppingCartTest {
      */
     @Test
     public void testMusicItemCart() {
-        ShoppingCart<MusicItem> cart = new ShoppingCart<>();
+        ShoppingCart<MusicItem> cart = new ShoppingCart<>();  //T is MusicItem
         cart.addItem(new MusicItem("CD-521"));
         cart.addItem(new MusicItem("CD-514"));
         // sanity check, this qualifies as "too simple to fail"
-        // assertEquals(2, cart.size());
+        assertEquals(2, cart.size());
     }
 
     /**
@@ -47,9 +56,9 @@ public class ShoppingCartTest {
      */
     @Test
     public void testMediaPlayerCart() {
-        ShoppingCart<MediaPlayer> cart = new ShoppingCart<>();
+        ShoppingCart<MediaPlayer> cart = new ShoppingCart<>();  //T is MediaPlayer
         cart.addItem(new MediaPlayer("AAC-PL233"));
         // sanity check, this qualifies as "too simple to fail"
-        // assertEquals(1, cart.size());
+        assertEquals(1, cart.size());
     }
 }
