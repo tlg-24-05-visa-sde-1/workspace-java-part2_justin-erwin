@@ -24,7 +24,25 @@ public class EmployeeFactory {
     public static Employee createEmployee(Map<String,String> inputMap) throws IllegalArgumentException {
         // return value
         Employee emp = null;
+        String inputType = inputMap.get("type");
+        if("HE".equals(inputType)){
+            String name = inputMap.get("name");  //convert to proper types
+            Date hireDate = Date.valueOf(inputMap.get("hireDate"));
+            Double rate = Double.valueOf(inputMap.get("rate"));
+            Double hours = Double.valueOf(inputMap.get("hours"));
 
+            emp = new HourlyEmployee(name, hireDate, rate, hours);  //create SalariedEmployee with ctor
+        }
+        else if("SE".equals(inputType)){
+            String name = inputMap.get("name");   //convert to proper types
+            Date hireDate = Date.valueOf(inputMap.get("hireDate"));
+            Double salary = Double.valueOf(inputMap.get("salary"));
+
+            emp = new SalariedEmployee(name, hireDate, salary);  //create SalariedEmployee with ctor
+        }
+        else {
+            throw new IllegalArgumentException("type must be HE or SE");
+        }
         return emp;
     }
 }

@@ -1,6 +1,8 @@
 package com.javatunes.personnel;
 
 import static org.junit.Assert.*;
+
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
@@ -52,7 +54,16 @@ public class EmployeeFactoryTest {
      */
     @Test
     public void testCreateEmployeeSalaried() {
-        // TODO
+        Employee emp = EmployeeFactory.createEmployee(seMap);
+        assertEquals(SalariedEmployee.class, emp.getClass());  //EXACT type match;
+        //verify that all the properties have indeed been set
+        assertEquals("Jackie", emp.getName());
+        assertEquals(Date.valueOf("1990-08-24"), emp.getHireDate());
+
+        //downcast 'emp' to more specific reference type SalariedEmployee to be able to use getSalaried(), which
+        //is a SalariedEmployee specific method
+        SalariedEmployee semp = (SalariedEmployee) emp;
+        assertEquals(50_000.0, semp.getSalary(), .001);
     }
 
     /**
@@ -60,7 +71,20 @@ public class EmployeeFactoryTest {
      */
     @Test
     public void testCreateEmployeeHourly() {
-        // TODO
+        Employee emp = EmployeeFactory.createEmployee(heMap);
+        assertEquals(HourlyEmployee.class, emp.getClass());
+
+        //downcast 'emp' to more specific reference type HourlyEmployee to be able to use getHours() and getRate(), which
+        //is a HourlyEmployee specific method
+        HourlyEmployee hemp = (HourlyEmployee) emp;
+        assertEquals(50.0, hemp.getRate(), .001);
+        assertEquals(40.0, hemp.getHours(), .001);
+
+
+        assertEquals("Jackie", emp.getName());
+        assertEquals(Date.valueOf("1990-08-24"), emp.getHireDate());
+
+
     }
 
     /**
@@ -69,6 +93,11 @@ public class EmployeeFactoryTest {
      */
     @Test
     public void testCreateEmployeeInvalidTypeThrowsIllegalArgumentException() {
-        // TODO
+        try {
+            Employee emp = EmployeeFactory.createEmployee(seMap);
+            fail("Expected an illegal argument exception to be thrown");
+        } catch (IllegalArgumentException e) {
+            e.getStackTrace();
+        }
     }
 }
