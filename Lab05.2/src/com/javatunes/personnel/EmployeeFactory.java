@@ -18,30 +18,32 @@ public class EmployeeFactory {
     }
 
     /**
-     * TODO: given the input map, create and return the correct object (with its properties set).
      * If the input map's "type" value is not "HE" or "SE", throw IllegalArgumentException with a suitable message.
      */
     public static Employee createEmployee(Map<String,String> inputMap) throws IllegalArgumentException {
         // return value
         Employee emp = null;
+        //FIRST, extract the 'indicator' from the Map, i.e., "HE" or "SE"
         String inputType = inputMap.get("type");
+
+        if(!"HE".equals(inputType) && !"SE".equals(inputType)) {  //if not "HE" or "SE", throw excpetion
+            throw new IllegalArgumentException("Invalid type: " + inputType + "Valid types are HE or SE");
+        }
+
+        String name = inputMap.get("name");    //name and hireDate are shared by HE and SE ctors
+        Date hireDate = Date.valueOf(inputMap.get("hireDate"));
+
         if("HE".equals(inputType)){
-            String name = inputMap.get("name");  //convert to proper types
-            Date hireDate = Date.valueOf(inputMap.get("hireDate"));
-            Double rate = Double.valueOf(inputMap.get("rate"));
+            Double rate = Double.valueOf(inputMap.get("rate"));    //convert to proper types for ctor
             Double hours = Double.valueOf(inputMap.get("hours"));
 
             emp = new HourlyEmployee(name, hireDate, rate, hours);  //create SalariedEmployee with ctor
         }
         else if("SE".equals(inputType)){
-            String name = inputMap.get("name");   //convert to proper types
-            Date hireDate = Date.valueOf(inputMap.get("hireDate"));
-            Double salary = Double.valueOf(inputMap.get("salary"));
+
+            Double salary = Double.valueOf(inputMap.get("salary"));   //convert to proper types for ctor
 
             emp = new SalariedEmployee(name, hireDate, salary);  //create SalariedEmployee with ctor
-        }
-        else {
-            throw new IllegalArgumentException("type must be HE or SE");
         }
         return emp;
     }

@@ -53,12 +53,11 @@ public class EmployeeFactoryTest {
      * assertEquals(SalariedEmployee.class, emp.getClass())
      */
     @Test
-    public void testCreateEmployeeSalaried() {
+    public void createEmployee_shouldReturnSalariedEmployee_whenTypeSE() {
         Employee emp = EmployeeFactory.createEmployee(seMap);
-        assertEquals(SalariedEmployee.class, emp.getClass());  //EXACT type match;
+        assertEquals(SalariedEmployee.class, emp.getClass());  //check for EXACT type match;
         //verify that all the properties have indeed been set
-        assertEquals("Jackie", emp.getName());
-        assertEquals(Date.valueOf("1990-08-24"), emp.getHireDate());
+        verifyCommonProperties(emp);  //verifies name and hireDate
 
         //downcast 'emp' to more specific reference type SalariedEmployee to be able to use getSalaried(), which
         //is a SalariedEmployee specific method
@@ -66,23 +65,26 @@ public class EmployeeFactoryTest {
         assertEquals(50_000.0, semp.getSalary(), .001);
     }
 
+    private static void verifyCommonProperties(Employee emp) {  //private method to verifyCommonProperties
+        assertEquals("Jackie", emp.getName());
+        assertEquals(Date.valueOf("1990-08-24"), emp.getHireDate());
+    }
+
     /**
      * TASK: verify that passing heMap into your factory returns a HourlyEmployee, with all properties set.
      */
     @Test
-    public void testCreateEmployeeHourly() {
+    public void createEmployeeHourly_shouldReturnHourlyEmployee_whenTypeHE() {
         Employee emp = EmployeeFactory.createEmployee(heMap);
-        assertEquals(HourlyEmployee.class, emp.getClass());
+        assertEquals(HourlyEmployee.class, emp.getClass());  //Check for EXACT type match
+
+        verifyCommonProperties(emp);  //verifies name and hireDate
 
         //downcast 'emp' to more specific reference type HourlyEmployee to be able to use getHours() and getRate(), which
         //is a HourlyEmployee specific method
         HourlyEmployee hemp = (HourlyEmployee) emp;
         assertEquals(50.0, hemp.getRate(), .001);
         assertEquals(40.0, hemp.getHours(), .001);
-
-
-        assertEquals("Jackie", emp.getName());
-        assertEquals(Date.valueOf("1990-08-24"), emp.getHireDate());
 
 
     }
@@ -94,6 +96,7 @@ public class EmployeeFactoryTest {
     @Test
     public void testCreateEmployeeInvalidTypeThrowsIllegalArgumentException() {
         try {
+            seMap.put("type", "ME");
             Employee emp = EmployeeFactory.createEmployee(seMap);
             fail("Expected an illegal argument exception to be thrown");
         } catch (IllegalArgumentException e) {
