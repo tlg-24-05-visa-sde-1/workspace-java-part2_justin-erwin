@@ -21,12 +21,35 @@ class RadishSortTest {
         radishes.sort(null); //this rearranges the same list, it is NOT a new list. passing null means natural order
         dump(radishes);
 
-        System.out.println("Sort by color by way of external Comparator class - RadishColorComparator");
-        radishes.sort(new RadishColorComparator());  //we pass sort an instance of the comparator to sort by color
+        System.out.println("Sort by color via anonymous Comparator class");
+        //radishes.sort(new RadishColorComparator());  //we pass sort an instance of the comparator to sort by color
+
+        radishes.sort(new Comparator<Radish>() {
+            @Override
+            public int compare(Radish radish1, Radish radish2) {
+                return radish1.getColor().compareTo(radish2.getColor()) ;
+            }
+        });
         dump(radishes);
 
-        System.out.println("Sort by guysOnTop by way of external Comparator class - RadishGuysOnTopComparator");
-        radishes.sort(new RadishGuysOnTopComparator());
+        System.out.println("Sort by guysOnTop via anonymous Comparator class");
+        //radishes.sort(new RadishGuysOnTopComparator());
+
+        System.out.println("Sort by tailLength via anonymous Comparator class");
+        radishes.sort(new Comparator<Radish>() {
+            @Override
+            public int compare(Radish radish1, Radish radish2) {
+                return Integer.compare(radish1.getGuysOnTop(), radish2.getGuysOnTop());
+            }
+        });
+        dump(radishes);
+
+        System.out.println("Sort by tailLength via Anonymous Class");
+        radishes.sort(new Comparator<Radish>(){
+            public int compare(Radish radish1, Radish radish2){
+                return Double.compare(radish1.getTailLength(), radish2.getTailLength());
+            }
+        });
         dump(radishes);
     }
 
