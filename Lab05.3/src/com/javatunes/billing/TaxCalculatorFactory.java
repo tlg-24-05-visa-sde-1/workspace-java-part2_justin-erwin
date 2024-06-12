@@ -9,8 +9,26 @@ public class TaxCalculatorFactory {
     }
 
     public static TaxCalculator createTaxCalculator(Location location) {
-        TaxCalculator taxCalculator = null;
+        //enhanced switch option - need a default case if you don't cover all possible cases
+        return switch (location) {
+            case ONLINE -> new OnlineTax();
+            case USA -> new USATax();
+            case EUROPE -> new EuropeTax();
+        };
+    }
+}
 
+// we could also use if, if else, else instead of switch case:
+ /*         if (location.equals(Location.USA)) {
+            taxCalculator = new USATax();
+        } else if (location.equals(Location.EUROPE)) {
+            taxCalculator = new EuropeTax();
+        } else {
+            taxCalculator = new OnlineTax();
+        }*/
+
+//classic switch option
+/*       TaxCalculator taxCalculator = null;
         switch (location) {
             case ONLINE:
                 taxCalculator = new OnlineTax();
@@ -22,15 +40,4 @@ public class TaxCalculatorFactory {
                 taxCalculator = new EuropeTax();
         }
         return taxCalculator;
-    }
-}
-
-
-// we could also use if, if else, else instead of switch case:
- /* if (location.equals(Location.USA)) {
-            taxCalculator = new USATax();
-        } else if (location.equals(Location.EUROPE)) {
-            taxCalculator = new EuropeTax();
-        } else {
-            taxCalculator = new OnlineTax();
-        }*/
+         */

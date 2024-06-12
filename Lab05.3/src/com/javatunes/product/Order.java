@@ -35,7 +35,7 @@ public class Order {
      * 3.  let some other party "inject" it into me, and I'll store it in another field
      *          private TaxCalculator calc;  - either comes in at construction time or through another setter
      */
-    public double getTax(){   //USES relationship- Order uses TaxCalculatorFactory
+    public double getTax(){   //USES relationship- Order uses TaxCalculatorFactory - "delegates the work to Factory"
         TaxCalculator taxCalculator = TaxCalculatorFactory.createTaxCalculator(getLocation());
         return taxCalculator.taxAmount(getCost());
     }
