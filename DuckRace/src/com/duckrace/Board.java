@@ -1,6 +1,6 @@
 package com.duckrace;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -38,9 +38,38 @@ import java.util.*;
  *   17       17    Dom        1    DEBIT_CARD
  */
 
-public class Board {
+public class Board implements Serializable {  //grants permission to save state of Board objects - anything else we want
+    //want to write will also have to be Serializable (so here we have to have DuckRacer implement Serializable too)
+    private static final String DATA_FILE_PATH = "data/board.dat";
+    private static final String STUDENTS_ID_FILE_PATH = "conf/student-ids.csv";
+
+    /*
+     * Read from binary file data/board.dat or create new Board (if file not there) -
+     * we create a new dir. called data to put the file in when created.
+     * NOTE: new Board object only created the *very fist time* the app is run.
+     */
+    public static Board getInstance() {
+        Board board = null;
+
+        if (Files.exists(Path.of(DATA_FILE_PATH))) {  //path is relative to DuckRacer module
+            //what we initialize in () after try will close automatically too - "Try with Resources"
+            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(DATA_FILE_PATH))) {
+                board = (Board) in.readObject();   //downcast to board
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {  //this only happens the very first time we run the app, b/c the file doesn't exist.
+            board = new Board();
+        }
+        return board;
+    }
+
     private final Map<Integer, String> studentIdMap = loadStudentIdMap();
     private final Map<Integer, DuckRacer> racerMap = new TreeMap<>();  //use TreeMap b/c it add based on natural order
+
+    //ctor - Prevent instantiation from outside - write a private ctor so nothing else can say new Board();
+    private Board() {
+    }
 
     /*
      * updates the winner board (Racer Map) by making a DuckRacer win
@@ -57,6 +86,21 @@ public class Board {
             racerMap.put(id, racer);  //easy to forget this step - put racer in racerMap
         }
         racer.win(reward);  //call win on DuckRacer racer
+        save();
+    }
+
+    /*
+     * Writes 'this' Board object to binary file data/board.dat
+     * used by update()
+     * In more detail, we are using Java's built-in Object Serialization facility
+     * to write the state of this object to the file (data/board.dat)
+     */
+    private void save() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(DATA_FILE_PATH))) {
+            out.writeObject(this); //write "me" (I am a Board object) to the file as bytes (dust)
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -66,10 +110,9 @@ public class Board {
      *  print headings
      */
     public void show() {  //two state for show, if racerMap is empty print "...no results" else show the board
-        if(racerMap.isEmpty()){
+        if (racerMap.isEmpty()) {
             System.out.println("There are currently no results to show");
-        }
-        else{
+        } else {
             Collection<DuckRacer> racers = racerMap.values(); //make a collection of only the map values
             System.out.println("id    name    wins    rewards");
             System.out.println("__    ____    ____    _______");
@@ -93,7 +136,7 @@ public class Board {
     private Map<Integer, String> loadStudentIdMap() {
         Map<Integer, String> map = new HashMap<>();  //use HashMap b/c it doesn't need to be in order
         try {
-            List<String> lines = Files.readAllLines(Path.of("conf/student-ids.csv"));//provide path to readAllLines with Path.of
+            List<String> lines = Files.readAllLines(Path.of(STUDENTS_ID_FILE_PATH));//provide path to readAllLines with Path.of
             //for each line (String), we need to split it into "tokens" based on the comma
             //i.e. "1" and "Amir", we can use split()
             for (String line : lines) {

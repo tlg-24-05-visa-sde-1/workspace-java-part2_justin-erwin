@@ -12,7 +12,7 @@ import static com.duckrace.Reward.*;
  * then "passes" those inputs into the System (makes method calls on board).
  */
 public class DuckRaceApp {
-    private final Board board = new Board();  //our new board is born - we pass the board user input and call methods
+    private final Board board = Board.getInstance();
     private final Scanner scanner = new Scanner(System.in);  //opposite of System.out - it's the console for input
 
     //call private methods that do "jobs" - won't contain much logic
