@@ -32,16 +32,18 @@ class RadishSortTest {
         });
         dump(radishes);
 
-        System.out.println("Sort by guysOnTop via anonymous Comparator class");
+        //System.out.println("sort with named top-level Comparator class");
         //radishes.sort(new RadishGuysOnTopComparator());
 
-        System.out.println("Sort by tailLength via anonymous Comparator class");
-        radishes.sort(new Comparator<Radish>() {
-            @Override
-            public int compare(Radish radish1, Radish radish2) {
-                return Integer.compare(radish1.getGuysOnTop(), radish2.getGuysOnTop());
-            }
-        });
+        //System.out.println("Sort by guysOnTop via anonymous Comparator class");
+//        radishes.sort(new Comparator<Radish>() {
+//            @Override
+//            public int compare(Radish radish1, Radish radish2) {
+//                return Integer.compare(radish1.getGuysOnTop(), radish2.getGuysOnTop());
+//            }
+//        });
+        System.out.println("Sort by guysOnTop via Lambda");
+        radishes.sort((r1,r2) -> Integer.compare(r1.getGuysOnTop(), r2.getGuysOnTop()));
         dump(radishes);
 
         System.out.println("Sort by tailLength via Anonymous Class");
