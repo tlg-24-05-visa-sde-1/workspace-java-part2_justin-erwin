@@ -25,7 +25,7 @@ public class Department {
     }
 
     public void listEmployees() {
-        employees.forEach(emp-> System.out.println(emp));
+        employees.forEach(System.out::println);  // <- Method Reference   lambda -> employees.forEach(emp-> System.out.println(emp));
 
 //        for (Employee emp : employees) {
 //            System.out.println(emp);
@@ -33,7 +33,7 @@ public class Department {
     }
 
     public void workEmployees() {
-        employees.forEach(emp -> emp.work());
+        employees.forEach(Employee::work); // <- Method Reference   lambda -> employees.forEach(emp -> emp.work());
 
 //        for (Employee emp : employees) {
 //            emp.work();
@@ -45,8 +45,8 @@ public class Department {
      * it will look similar to the workEmployees() method above
      */
     public void payEmployees() {
-        employees.forEach(emp -> emp.pay());
-        
+        employees.forEach(Employee::pay);  // <- Method Reference   lambda -> employees.forEach(emp -> emp.pay())
+
 //        for (Employee emp : employees) {
 //            emp.pay();
 //        }
