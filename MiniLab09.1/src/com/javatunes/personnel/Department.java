@@ -24,8 +24,9 @@ public class Department {
     private String name = "Sales";
     private String location = "Seattle";
 
+    //these are constructor calls
     private Collection<Employee> employees = Arrays.asList(
-                      /* id      name          hireDate       salary */
+                           /* id          name          hireDate                salary */
             new Employee(1L,    "Jane",       "2009-07-01",   50000.0),
             new Employee(2L,    "Morgan",     "2009-12-05",   34000.0),
             new Employee(3L,    "Bob",        "2015-01-14",   95000.0),
